@@ -1,6 +1,7 @@
 const width = 28
 const grid = document.querySelector('.grid')
-const scoreDisplay = document.querySelector('#score')
+const scoreDisplay = document.getElementById('score')
+let squares = []
 
 // make the layout for the Game
 //     28 * 28 = 784
@@ -42,3 +43,19 @@ const layout = [
     1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1 
 
 ]
+
+// CODE FOR THE BOARD FUNCTION
+
+function createBoard() {
+
+    for (let i = 0; i < layout.length; i++) {
+        //each time the create a div it will be placed in the square 784X
+        const square = document.createElement('div')
+        grid.appendChild(square)
+        squares.push(square)
+        console.log(squares)
+        
+    }
+    
+}
+createBoard()
