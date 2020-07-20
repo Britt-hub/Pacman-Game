@@ -48,14 +48,50 @@ const layout = [
 
 function createBoard() {
 
+    // for loop 784 times
     for (let i = 0; i < layout.length; i++) {
-        //each time the create a div it will be placed in the square 784X
+        // create the square
         const square = document.createElement('div')
+        // put squares in the grid
         grid.appendChild(square)
-        squares.push(square)
+        // put the square in squares array
+        squares.push(squares)
         console.log(squares)
-        
+
+// this should show up in the grid as a pattern
+// Currently not working////////////////        
+        if (layout[i] === 0) {
+            squares[i].classList.add('pac-dot')
+            
+        } else if (layout[i] === 1) {
+            squares[i].classList.add('wall')
+        } else if (layout[i] === 3) {
+            squares[i].classList.add('power-pellet')
+        }
+    
     }
+    console.log(squares)
+
     
 }
 createBoard()
+
+// this will the position of pacman. 490 is in the bottom middle of the grid.
+
+let pacmanCurrentIndex = 49
+squares[pacmanCurrentIndex].classList.add('pacman')
+
+function control(e) {
+    //key code of each key that the user has pressed. 40 = down arrow key 
+    //info was found on http://keycode.info/
+    if (e.keyCode === 40) {
+        console.log('pressed down')
+    } else if (e.keyCode === 38) {
+        console.log('pressed up')
+    } else if (e.keyCode === 37) {
+        console.log('pressed left')
+    } else if (e.keyCode === 39) {
+        console.log('pressed right')
+    }
+}
+document.addEventListener('keyup', control)
