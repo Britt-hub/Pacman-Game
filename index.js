@@ -82,16 +82,36 @@ let pacmanCurrentIndex = 49
 squares[pacmanCurrentIndex].classList.add('pacman')
 
 function control(e) {
+    squares[pacmanCurrentIndex].classList.remove('pacman')
     //key code of each key that the user has pressed. 40 = down arrow key 
     //info was found on http://keycode.info/
-    if (e.keyCode === 40) {
-        console.log('pressed down')
-    } else if (e.keyCode === 38) {
-        console.log('pressed up')
-    } else if (e.keyCode === 37) {
-        console.log('pressed left')
-    } else if (e.keyCode === 39) {
-        console.log('pressed right')
+
+    //using switch states instead of else if statements for a cleaner look
+    switch (e.keyCode) {
+        case 40:
+            console.log('pressed down')
+            ///////if you try to move pacman where there is a wall he will not move. both state
+                 /////must be true in order to run pacmanCurrentIndex += width/////
+            if ( 
+                !squares[pacmanCurrentIndex + width].classList.contains('wall') &&
+                pacmanCurrentIndex + width < width * width)
+                pacmanCurrentIndex -= width
+            
+            break
+        case 38:
+            console.log('pressed up')
+            if (pacmanCurrentIndex - width >= 0) pacmanCurrentIndex -= width
+            break
+        case 37:
+            console.log('pressed left')
+            if (pacmanCurrentIndex % width !== 0) pacmanCurrentIndex -=1
+            break
+        case 39:
+            console.log('pressed right')
+            if (pacmanCurrentIndex % width < width -1) pacmanCurrentIndex +=1
+            break
     }
+    squares[pacmanCurrentIndex].classList.add('pacman')
+
 }
 document.addEventListener('keyup', control)
