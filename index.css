@@ -39,6 +39,25 @@ html, body {
     background-color: yellow;
     border-radius: 7.5px;
     border: none;
+ 
+}
 
-    
+.blinky {
+    background-color: red;
+    border: none;
+}
+
+.jcole {
+    background-color: rgb(0, 255, 85);
+    border: none;
+}
+
+.pinky {
+    background-color: pink;
+    border: none;
+}
+
+.brittany {
+    background-color: orange;
+    border: none;
 }

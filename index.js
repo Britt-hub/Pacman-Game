@@ -2,6 +2,7 @@ const width = 28
 const grid = document.querySelector('.grid')
 const scoreDisplay = document.getElementById('score')
 let squares = []
+let score = 0
 
 // make the layout for the Game
 //     28 * 28 = 784
@@ -56,15 +57,14 @@ function createBoard() {
         grid.appendChild(square)
         // put the square in squares array
         squares.push(square)
-        console.log(squares)
+        // console.log(squares)
 
         // this should show up in the grid as a pattern
-        // Currently working Now :) ////////////////        
+        // Currently working Now  ////////////////        
         if (layout[i] === 0) {
             squares[i].classList.add('pac-dot')
 
         } else if (layout[i] === 1) {
-            console.log(i, squares[i])
             squares[i].classList.add('wall')
         } else if (layout[i] === 2) {
             squares[i].classList.add('ghost-lair')
@@ -74,7 +74,7 @@ function createBoard() {
         }
 
     }
-    console.log(squares)
+    // console.log(squares)
 
 
 }
@@ -97,7 +97,7 @@ function control(e) {
             ///////if you try to move pacman where there is a wall he will not move. both state
             /////must be true in order to run pacmanCurrentIndex += width/////
             if (
-                squares[pacmanCurrentIndex + width].classList.contains('ghost-lair') &&
+                !squares[pacmanCurrentIndex + width].classList.contains('ghost-lair') &&
                 !squares[pacmanCurrentIndex + width].classList.contains('wall') &&
                 pacmanCurrentIndex + width < width * width)
                 pacmanCurrentIndex += width
@@ -106,7 +106,7 @@ function control(e) {
         case 38:
             console.log('pressed up')
             if (
-                squares[pacmanCurrentIndex - width].classList.contains('ghost-lair') &&
+                !squares[pacmanCurrentIndex - width].classList.contains('ghost-lair') &&
                 !squares[pacmanCurrentIndex - width].classList.contains('wall') &&
                 pacmanCurrentIndex - width >= 0)
                 pacmanCurrentIndex -= width
@@ -114,21 +114,96 @@ function control(e) {
         case 37:
             console.log('pressed left')
             if (
-                squares[pacmanCurrentIndex - 1].classList.contains('ghost-lair') &&
+                !squares[pacmanCurrentIndex - 1].classList.contains('ghost-lair') &&
                 !squares[pacmanCurrentIndex - 1].classList.contains('wall') &&
                 pacmanCurrentIndex % width !== 0)
                 pacmanCurrentIndex -= 1
+            if (pacmanCurrentIndex === 364) {
+                pacmanCurrentIndex = 391
+            }
             break
         case 39:
             console.log('pressed right')
             if (
-                squares[pacmanCurrentIndex + 1].classList.contains('ghost-lair') &&
+                !squares[pacmanCurrentIndex + 1].classList.contains('ghost-lair') &&
                 !squares[pacmanCurrentIndex + 1].classList.contains('wall') &&
                 pacmanCurrentIndex % width < width - 1)
                 pacmanCurrentIndex += 1
+            if (pacmanCurrentIndex === 391) {
+                // Pac-Man disappears before you go to the edge of the gride
+                pacmanCurrentIndex = 364
+            }
             break
     }
     squares[pacmanCurrentIndex].classList.add('pacman')
+    pacDotEaten()
 
 }
 document.addEventListener('keyup', control)
+
+function pacDotEaten() {
+    if (squares[pacmanCurrentIndex].classList.contains('pac-dot')) {
+        //if Pac-Man ate the Pac-Dot then it has to be removed from the game
+        squares[pacmanCurrentIndex].classList.remove('pac-dot')
+
+
+        score++
+        scoreDisplay.innerHTML = score
+    }
+}
+
+class Ghost {
+    constructor(className, speed, startIndex) {
+        this.className = className
+        this.speed = speed
+        this.startIndex = startIndex
+        this.currentIndex = startIndex
+        this.isScared = false
+        this.timerId = NaN
+    }
+}
+
+const ghosts = [
+    new Ghost('blinky', 250, 348),
+    new Ghost('pinky', 400, 376),
+    new Ghost('jcole', 300, 351),
+    new Ghost('brittany', 500, 379)
+]
+
+
+
+// creating the ghost on the grid
+ghosts.forEach(ghost => {
+    squares[ghost.startIndex].classList.add(ghost.className)
+    squares[ghost.startIndex].classList.add('ghost')
+})
+
+
+ghosts.forEach(ghost => ghostOnTheMove(ghost))
+
+function ghostOnTheMove(ghost) {
+    console.log('moved ghost')
+    const directions = [-1, +1, -width, +width]
+    //Math.floor is rounding down.
+    let direction = directions[Math.floor(Math.random() * directions.length)]
+    console.log(direction)
+
+    ghost.timerId = setInterval(function () {
+        // for the ghost to move around it can not contain a wall or another ghost
+        if (!squares[ghost.currentIndex + direction].classList.contains('wall') &&
+            !squares[ghost.currentIndex + direction].classList.contains('ghost')
+        ) {
+            // will allow the ghost to move throughout the gride using timer id.
+            // remove any class that is ghost
+            // add the direction to the current index
+            // then add the ghost class back to it again.
+            squares[ghost.currentIndex].classList.remove(ghost.className)
+            ghost.currentIndex += direction
+            squares[ghost.currentIndex].classList.add(ghost.className)
+
+        } else direction = directions[Math.floor(Math.random() * directions.length)]
+
+    }, ghost.speed)
+
+}
+
