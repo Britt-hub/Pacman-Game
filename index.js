@@ -145,11 +145,15 @@ function pacDotEaten() {
     if (squares[pacmanCurrentIndex].classList.contains('pac-dot')) {
         //if Pac-Man ate the Pac-Dot then it has to be removed from the game
         squares[pacmanCurrentIndex].classList.remove('pac-dot')
-
-
         score++
         scoreDisplay.innerHTML = score
     }
+}
+
+function powerFoodEaten() {
+    if (square[pacmanCurrentIndex].classList.contains('power-pellet')) {
+    
+}
 }
 
 class Ghost {
@@ -174,8 +178,8 @@ const ghosts = [
 
 // creating the ghost on the grid
 ghosts.forEach(ghost => {
-    squares[ghost.startIndex].classList.add(ghost.className)
-    squares[ghost.startIndex].classList.add('ghost')
+    squares[ghost.currentIndex].classList.add(ghost.className)
+    squares[ghost.currentIndex].classList.add('ghost')
 })
 
 
@@ -198,9 +202,10 @@ function ghostOnTheMove(ghost) {
             // add the direction to the current index
             // then add the ghost class back to it again.
             squares[ghost.currentIndex].classList.remove(ghost.className)
+            squares[ghost.currentIndex].classList.remove('ghost')
             ghost.currentIndex += direction
             squares[ghost.currentIndex].classList.add(ghost.className)
-
+            squares[ghost.currentIndex].classList.add('ghost')
         } else direction = directions[Math.floor(Math.random() * directions.length)]
 
     }, ghost.speed)
