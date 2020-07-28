@@ -137,6 +137,7 @@ function control(e) {
     }
     squares[pacmanCurrentIndex].classList.add('pacman')
     pacDotEaten()
+    powerFoodEaten()
 
 }
 document.addEventListener('keyup', control)
@@ -152,9 +153,16 @@ function pacDotEaten() {
 
 function powerFoodEaten() {
     if (square[pacmanCurrentIndex].classList.contains('power-pellet')) {
-    
+        score += 10
+        ghost.forEach(ghost => ghost.isScared = true)
+        setTimeout(unScaredGhosts, time, 10000)
+    }
 }
+function unScaredGhosts() {
+    ghosts.forEach(ghost => ghost.isScared = false)
+
 }
+
 
 class Ghost {
     constructor(className, speed, startIndex) {
