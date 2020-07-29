@@ -142,6 +142,14 @@ function control(e) {
 }
 document.addEventListener('keyup', control)
 
+// *****************MY TO DO LIST*****************
+// Power Food needs to 
+// After eating the power pellet the ghost will need to change colors each time
+// Figure out how to get the ghost outside of the container quicker
+// When getting caught by the ghost loose 5 pts each time until you are dead (points are zeroed out)
+// When all of the pellets are eaten change the back ground to green and say "YOU WON"
+
+
 function pacDotEaten() {
     if (squares[pacmanCurrentIndex].classList.contains('pac-dot')) {
         //if Pac-Man ate the Pac-Dot then it has to be removed from the game
@@ -149,13 +157,15 @@ function pacDotEaten() {
         score++
         scoreDisplay.innerHTML = score
     }
-}
 
+
+}
 function powerFoodEaten() {
-    if (square[pacmanCurrentIndex].classList.contains('power-pellet')) {
+    if (squares[pacmanCurrentIndex].classList.contains('power-pellet')) {
+        squares[pacmanCurrentIndex].classList.remove('power-pellet')
         score += 10
-        ghost.forEach(ghost => ghost.isScared = true)
-        setTimeout(unScaredGhosts, time, 10000)
+        ghosts.forEach(ghost => ghost.isScared = true)
+        setTimeout(unScaredGhosts, 10000)
     }
 }
 function unScaredGhosts() {
@@ -195,6 +205,7 @@ ghosts.forEach(ghost => ghostOnTheMove(ghost))
 
 function ghostOnTheMove(ghost) {
     console.log('moved ghost')
+    
     const directions = [-1, +1, -width, +width]
     //Math.floor is rounding down.
     let direction = directions[Math.floor(Math.random() * directions.length)]
@@ -214,9 +225,15 @@ function ghostOnTheMove(ghost) {
             ghost.currentIndex += direction
             squares[ghost.currentIndex].classList.add(ghost.className)
             squares[ghost.currentIndex].classList.add('ghost')
+            if (ghost.isScared) {
+                squares[ghost.currentIndex].classList.add('scared') 
+            } else {
+                squares[ghost.currentIndex].classList.remove('scared')
+            }
         } else direction = directions[Math.floor(Math.random() * directions.length)]
 
     }, ghost.speed)
+
 
 }
 
