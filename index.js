@@ -74,13 +74,12 @@ function createBoard() {
         }
 
     }
-    // console.log(squares)
 
 
 }
 createBoard()
 
-// this will the position of pacman. 490 is in the bottom middle of the grid.
+// the position of pacman. 490 is in the bottom middle of the grid.
 
 let pacmanCurrentIndex = 49
 squares[pacmanCurrentIndex].classList.add('pacman')
@@ -143,8 +142,6 @@ function control(e) {
 document.addEventListener('keyup', control)
 
 // *****************MY TO DO LIST*****************
-// Power Food needs to 
-// After eating the power pellet the ghost will need to change colors each time
 // Figure out how to get the ghost outside of the container quicker
 // When getting caught by the ghost loose 5 pts each time until you are dead (points are zeroed out)
 // When all of the pellets are eaten change the back ground to green and say "YOU WON"
