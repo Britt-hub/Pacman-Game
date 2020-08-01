@@ -46,6 +46,7 @@ const layout = [
 ]
 
 // CODE FOR THE BOARD FUNCTION
+// there are 784 sqaures
 
 function createBoard() {
 
@@ -183,8 +184,8 @@ class Ghost {
 }
 
 const ghosts = [
-    new Ghost('blinky', 250, 348),
-    new Ghost('pinky', 400, 376),
+    new Ghost('nas', 250, 348),
+    new Ghost('eve', 400, 376),
     new Ghost('jcole', 300, 351),
     new Ghost('brittany', 500, 379)
 ]
