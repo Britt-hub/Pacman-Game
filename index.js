@@ -90,7 +90,7 @@ function control(e) {
     //key code of each key that the user has pressed. 40 = down arrow key 
     //info was found on http://keycode.info/
 
-    //using switch states instead of else if statements for a cleaner look
+    //using switch states instead of else if statements for a cleaner look. Rework!
     switch (e.keyCode) {
         case 40:
             console.log('pressed down')
@@ -143,7 +143,6 @@ function control(e) {
 document.addEventListener('keyup', control)
 
 // *****************MY TO DO LIST*****************
-// Figure out how to get the ghost outside of the container quicker
 // When getting caught by the ghost loose 5 pts each time until you are dead (points are zeroed out)
 // When all of the pellets are eaten change the back ground to green and say "YOU WON"
 
