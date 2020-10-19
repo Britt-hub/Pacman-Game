@@ -3,6 +3,7 @@ const grid = document.querySelector('.grid')
 const scoreDisplay = document.getElementById('score')
 let squares = []
 let score = 0
+let pacManIsAlive = true;
 
 // make the layout for the Game
 //     28 * 28 = 784
@@ -136,8 +137,11 @@ function control(e) {
             break
     }
     squares[pacmanCurrentIndex].classList.add('pacman')
+    
     pacDotEaten()
     powerFoodEaten()
+    pacmanEaten()
+    
 
 }
 document.addEventListener('keyup', control)
@@ -170,6 +174,15 @@ function unScaredGhosts() {
 
 }
 
+function pacmanEaten() {
+    if (!pacManIsAlive) return 
+    if (squares[pacmanCurrentIndex].classList.contains('ghost')) {
+        score -= 5
+        scoreDisplay.innerHTML = score
+        pacManIsAlive = false
+    }
+ 
+}
 
 class Ghost {
     constructor(className, speed, startIndex) {
